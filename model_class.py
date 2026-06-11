@@ -2,6 +2,7 @@ import networkx as nx
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import copy
 
 '''
 SPOSÓB DZIAŁANIA KLASY AGENT 
@@ -187,6 +188,91 @@ class Model:
         
         plt.tight_layout()
         plt.show()
+        
+        
+    def plot_grid(self,n,acc=100):
+        """ZRÓB TAK ŻEBY DZIAŁAŁO111111111111111
+        dodaj funkcję culture_matrix zeby nie powtarzac kodu bez sensu plus musi być współny słownik kolorów do obu wizualizacji
+        bo inaczej te same kolory oznaczają rózne kultury i troche to nie ma sensu, albo wgl usunąć, 
+        wsm trochę ma sensu bo bedzie widać czy się skupiaja
+        
+        moze jakby było mniej wymiarów to kodować kolory wg podobienstwa, np jakby były 3 featury to kazdy mialby 
+        jeden kanal znormalizowany rgb po q i imo by było widac na tych kolorach czy są kultury podbne do sb czy n
+        ale nwm czt to jest potrzebne, szczegolnie ze trochę nwm co z wyższymi wymiarami, może zlockować walor na jakims poziomie
+        przy mieszaniu kolorów (jak liczbowo mieszać kolory rgb bez zmiany jasności? nie wiem) i 
+        jasność bd kolejnym wymiarem, zawsze pozostają wzorki xD 
+
+        Args:
+            n (_type_): _description_
+            acc (int, optional): _description_. Defaults to 100.
+        """
+        
+        model_before = copy.deepcopy(self) # żeby nie uciekało
+        model_after = self.run_simulation(n,acc)[0]
+        
+        culture_ids_bf = {}
+        current_id_bf = 0
+        matrix_bf = np.zeros((model_before.grid_len, model_before.grid_len))
+        for i in range(model_before.grid_len):
+            for j in range(model_before.grid_len):
+                culture = tuple(model_before.grid[i][j].features)
+
+                if culture not in culture_ids_bf:
+                    culture_ids_bf[culture] = current_id_bf
+                    current_id_bf += 1
+
+                matrix_bf[i, j] = culture_ids_bf[culture]
+                
+        culture_ids_af = {}
+        current_id_af = 0
+        matrix_af = np.zeros((model_after.grid_len, model_after.grid_len))
+        for i in range(model_after.grid_len):
+            for j in range(model_after.grid_len):
+                culture = tuple(model_after.grid[i][j].features)
+
+                if culture not in culture_ids_af:
+                    culture_ids_af[culture] = current_id_af
+                    current_id_af += 1
+
+                matrix_af[i, j] = culture_ids_af[culture]
+
+        plt.figure(figsize=(8,8))
+        
+        plt.subplot(1,2,1)
+        plt.imshow(matrix_bf, cmap="tab20")
+        plt.colorbar(label="Kultura")
+        plt.title("Początkowy stan modelu")
+        
+        plt.subplot(1,2,2)
+        plt.imshow(matrix_af, cmap="tab20")
+        plt.colorbar(label="Kultura")
+        plt.title("Końcowy stan modelu")
+        
+        plt.tight_layout()
+        plt.show()
+        
+        
+    def plot_like_in_the_paper(self):
+        """Jak w nazwie, jeszcze nwm jak to zrobic ale bedzie zrobione, prototyp: PLOT_Q
+        """
+        pass
+    
+def plot_q(n,N,a,b):
+    qs = range(n, N)
+    final_cultures = []
+    for q in qs:
+        model = Model(nx.Graph(),feature_len=a,grid_len=b,traits_per_feature=q)
+        model.create_grid()
+        model.run_simulation(1000)
+        final_cultures.append(
+            len(model.distinct_agents_traits())
+        )
+    plt.plot(qs, final_cultures, 'o-')
+    plt.xlabel("q (traits per feature)")
+    plt.ylabel("Liczba kultur po zbieżności")
+    plt.title("Przejście fazowe (?) w modelu Axelroda")
+    plt.grid()
+    plt.show()
 
 
 if __name__ == "__main__":
@@ -234,4 +320,6 @@ if __name__ == "__main__":
     #after_sim.plot()
     model2 = Model(nx.Graph(), 7, 8, 10)
     model2.create_grid()
-    model2.plot_t(1000)
+    #model2.plot_t(1000)
+    #model.plot_grid(1000) to na razie nie działa
+    plot_q(2,25,5,20)
