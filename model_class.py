@@ -141,23 +141,51 @@ class Model:
             i (int) : number of iteration +1
             steps (int) : number of steps, taken every acc iterations
             cultures (int) : number of distinct cultures (Agents with distinct features), taken every acc iterations
+            avg_similarities (np.float(64)) : value of average similarity between each pair of Agents, taken every acc iterations
         """
         steps=[]
         cultures=[]
+        avg_similarities=[]
         i=1
         while i<=n:
             self.simulation_trial()
             if i % acc == 0:
                 steps.append(i)
                 cultures.append(len(self.distinct_agents_traits()))
+                avg_similarities.append(self.avg_similarity())
             if i % 1000 == 0 and self.has_converged():
                 break
             i+=1
-        return self,i,steps,cultures
+        return self,i,steps,cultures,avg_similarities
     
-    def plot_t(self,T):
-        #T - time horizon of simulation
-        plt.hist(self.graph)
+    def plot_t(self,n,acc=100):
+        """Create two plots after running the simulation: subplot 1 of cultures(time), subplot 2 of average_similarities(time)
+        Args:
+            n (int) : maximal number of iterations in the simulation
+            acc (int) : accuracy, number of iterations between each snapshot in the simulation, default 100
+        """
+        self,i,steps,cultures,avg_similarities = self.run_simulation(n,acc)
+        x = np.array(steps)
+        y1 = np.array(cultures)
+        
+        plt.figure(figsize=(10,4))
+        plt.suptitle(f"Model Axelroda \n features = {self.feature_len}, traits per feature = {self.traits_per_feature}, siatka = {self.grid_len}x{self.grid_len}")
+        
+        plt.subplot(1,2,1)
+        plt.plot(x,y1)
+        plt.xlabel("kroki czasowe")
+        plt.ylabel("liczba kultur")
+        plt.title("Liczba kultur (różnych rodzajów agentów)")
+        plt.grid(True)
+        
+        plt.subplot(1,2,2)
+        plt.plot(steps,avg_similarities)
+        plt.xlabel("kroki czasowe")
+        plt.ylabel("średnie podobieństwo")
+        plt.title("Średnie podobieństwo agentów w całym grafie")
+        plt.grid(True)
+        
+        plt.tight_layout()
         plt.show()
 
 
@@ -200,8 +228,10 @@ if __name__ == "__main__":
     print(model.distinct_agents_traits())
     
     print("############################")
-    after_sim,t = model.run_simulation(10)
-    print(after_sim,t)
+    #after_sim,t = model.run_simulation(10)
+    #print(after_sim,t)
     #model.plot()
     #after_sim.plot()
-    model.plot_t(1)
+    model2 = Model(nx.Graph(), 7, 8, 10)
+    model2.create_grid()
+    model2.plot_t(1000)
