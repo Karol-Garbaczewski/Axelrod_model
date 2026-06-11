@@ -119,6 +119,18 @@ class Model:
     def __repr__(self):
         return "\n".join(" ".join(map(str, row)) for row in self.grid)
     
+    #################################################################################
+    
+    def avg_similarity(self):
+        """Calculates the average similarity between each pair of neighbours in the graph.
+        Returns:
+            np.float(64): average similarity
+        """
+        similarities = []
+        for u,v in self.graph.edges:
+            similarities.append(u.is_similar(v))
+        return np.mean(similarities)
+    
     def run_simulation(self,n,acc=100):
         """Run the simulation of self for n steps or until it has converged if it happened faster.
         Args:
