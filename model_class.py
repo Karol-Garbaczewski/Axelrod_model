@@ -1,5 +1,6 @@
 import networkx as nx
 import numpy as np
+import random
 
 '''
 SPOSÓB DZIAŁANIA KLASY AGENT 
@@ -45,7 +46,7 @@ class Agent:
     def change_feature(self, adj_site_features: np.ndarray):
         mask = self.features != adj_site_features  # filtering different traits
         indices = np.flatnonzero(mask)
-        if self.feature_len > indices.size > 0:  # checking if is there anything to change, is the change possible
+        if indices.size > 0:  # checking if is there anything to change, is the change possible
             index_to_change = np.random.choice(indices)  # choose only from
             self.features[index_to_change] = adj_site_features[index_to_change]
 
@@ -60,7 +61,7 @@ class Agent:
 
 
 class Model:
-    def __init__(self, graph: nx.Graph, feature_len: np.ndarray, grid_len: int, traits_per_feature: int):
+    def __init__(self, graph: nx.Graph, feature_len: int, grid_len: int, traits_per_feature: int):
         self.graph = graph
         self.feature_len = feature_len
         self.grid_len = grid_len
@@ -84,10 +85,19 @@ class Model:
     def get_neighbours(self, agent: Agent):
         return list(self.graph.neighbors(agent))
 
+    def has_converged(self):
+        """Checks whether model converged into the stable state - nothing can be changed.
+        In that case you can end simulation faster."""
+        for u, v in self.graph.edges:
+            similarity = u.is_similar(v)
+            if 0 < similarity < 1:
+                return False
+        return True
+
     def simulation_trial(self):
         row, col = np.random.randint(0, self.grid_len), np.random.randint(0, self.grid_len)  # random 'active agent'
         neighbors = self.get_neighbours(self.grid[row][col])
-        random_neighbor = np.random.choice(neighbors)  # random its neighbor
+        random_neighbor = random.choice(neighbors)  # random its neighbor
         similarity = self.grid[row][col].is_similar(random_neighbor)
 
         if np.random.uniform() < similarity:
@@ -99,7 +109,6 @@ class Model:
         for i in self.grid:
             for j in i:
                 temp = tuple(j.features.tolist())
-                print(temp)
                 if temp not in distinct:
                     distinct[temp] = 1
                 else:
@@ -112,7 +121,7 @@ class Model:
 
 if __name__ == "__main__":
 
-    model = Model(nx.Graph(), 4, 10, 9)
+    model = Model(nx.Graph(), 6, 10, 2)
 
     model.create_grid()
     print(model.graph)
@@ -139,9 +148,11 @@ if __name__ == "__main__":
         print(random_neighbor, "neighbor")
         print(model.grid[row][col], "active agent")
 
-# Simulation example
+    # Simulation example
     for i in range(100000):
         model.simulation_trial()
-
+        if i % 1000 == 0 and model.has_converged():
+            print(f"Model has converged in {i} steps")
+            break
     print(model)
     print(model.distinct_agents_traits())
