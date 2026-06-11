@@ -93,10 +93,26 @@ class Model:
         if np.random.uniform() < similarity:
             self.grid[row][col].change_feature(random_neighbor.features)
 
+    def distinct_agents_traits(self):
+        """Use it after simulation. Counts agents with distinct features """
+        distinct = {}
+        for i in self.grid:
+            for j in i:
+                temp = tuple(j.features.tolist())
+                print(temp)
+                if temp not in distinct:
+                    distinct[temp] = 1
+                else:
+                    distinct[temp] += 1
+        return distinct
+
+    def __repr__(self):
+        return "\n".join(" ".join(map(str, row)) for row in self.grid)
+
 
 if __name__ == "__main__":
 
-    model = Model(nx.Graph(), 10, 10, 2)
+    model = Model(nx.Graph(), 4, 10, 9)
 
     model.create_grid()
     print(model.graph)
@@ -122,3 +138,10 @@ if __name__ == "__main__":
         model.grid[row][col].change_feature(random_neighbor.features)
         print(random_neighbor, "neighbor")
         print(model.grid[row][col], "active agent")
+
+# Simulation example
+    for i in range(100000):
+        model.simulation_trial()
+
+    print(model)
+    print(model.distinct_agents_traits())
