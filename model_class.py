@@ -2,6 +2,7 @@ import networkx as nx
 import numpy as np
 import random
 import matplotlib.pyplot as plt
+import matplotlib
 import copy
 
 '''
@@ -189,8 +190,8 @@ class Model:
         plt.tight_layout()
         plt.show()
         
-    def culture_matrix(self):
-        """Create a matrix of cultures from self.
+    def culture_matrix_deprecated(self):
+        """Create a matrix of cultures from self. Deprecated, see: culture_matrix().
         Returns:
             matrix (np.ndarray): matrix of cultures
         """
@@ -205,6 +206,39 @@ class Model:
                     current_id += 1
                 matrix[i, j] = culture_ids[culture]
         return matrix
+    def culture_matrix(self, culture_ids):
+        """Create a matrix of cultures from self.
+        Args:
+            culture_ids (_type_): _description_
+        Returns:
+            matrix (ndarray): matrix of distinct cultures, coded by culture_ids
+        """
+        matrix = np.zeros((self.grid_len, self.grid_len), dtype=int)
+        for i in range(self.grid_len):
+            for j in range(self.grid_len):
+                culture = tuple(self.grid[i][j].features)
+                matrix[i, j] = culture_ids[culture]
+        return matrix
+    
+    def culture_ids(self,other):
+        """_summary_
+
+        Args:
+            other (_type_): _description_
+            
+        Returns:
+            _type_: _description_
+        """
+        all_cultures = {}
+        current_id = 0
+        for model in [self, other]:
+            for row in model.grid:
+                for agent in row:
+                    culture = tuple(agent.features)
+                    if culture not in all_cultures:
+                        all_cultures[culture] = current_id
+                        current_id += 1
+        return all_cultures
         
     def plot_grid(self,n,acc=100):
         """ZRÓB TAK ŻEBY DZIAŁAŁO111111111111111
@@ -223,35 +257,29 @@ class Model:
             acc (int, optional): accuracy of the simulation (go to -> run_simulation() for more info). Defaults to 100.
         """
         
-        model_before = copy.deepcopy(self) # żeby nie uciekało
-        matrix_bf = model_before.culture_matrix()
-        
+        model_before = copy.deepcopy(self) 
         model_after = self.run_simulation(n,acc)[0]
-        matrix_af = model_after.culture_matrix
+        all_cultures = model_before.culture_ids(model_after)
         
-        all_cultures = matrix_bf
-        for i,j in matrix_af:
-            if matrix_af[i][j] not in all_cultures:
-                all_cultures.append(matrix_af[i][j])
-                
-        colormap = {} ##to na 100% tak nie działa xddddd
-        for iden in all_cultures(axis=0):
-            colormap.update({iden:iden/256})
+        matrix_bf = model_before.culture_matrix(all_cultures)
+        matrix_af = model_after.culture_matrix(all_cultures)
+        
+        colormap = matplotlib.colors.ListedColormap(np.random.rand(len(all_cultures), 3))
 
         plt.figure(figsize=(8,8))
         plt.suptitle("Wizualizacja kultur w modelu Axelroda")
         
         plt.subplot(1,2,1)
-        plt.imshow(matrix_bf, cmap="tab20")
-        plt.colorbar(label="Kultura")
+        plt.imshow(matrix_bf, cmap=colormap)
         plt.title("Początkowy stan modelu")
         
         plt.subplot(1,2,2)
-        plt.imshow(matrix_af, cmap="tab20")
-        plt.colorbar(label="Kultura")
+        plt.imshow(matrix_af, cmap=colormap)
         plt.title("Końcowy stan modelu")
         
+        
         plt.tight_layout()
+        plt.colorbar(label="Kultura",location="top")
         plt.show()
         
     
@@ -327,5 +355,5 @@ if __name__ == "__main__":
     model2 = Model(nx.Graph(), 7, 8, 10)
     model2.create_grid()
     #model2.plot_t(1000)
-    #model.plot_grid(1000) to na razie nie działa
-    plot_q(2,25,5,20)
+    model2.plot_grid(100000) #to na razie nie działa
+    #plot_q(2,25,5,20)
