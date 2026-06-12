@@ -161,10 +161,10 @@ class Model:
         return self,i,steps,cultures,avg_similarities
     
     def plot_t(self,n,acc=100):
-        """Create two plots after running the simulation: subplot 1 of cultures(time), subplot 2 of average_similarities(time)
+        """Create two plots after running the simulation: subplot 1 of cultures(time), subplot 2 of average_similarities(time).
         Args:
-            n (int) : maximal number of iterations in the simulation
-            acc (int) : accuracy, number of iterations between each snapshot in the simulation, defaults to 100
+            n (int) : maximal number of iterations in the simulation.
+            acc (int) : accuracy, number of iterations between each snapshot in the simulation, defaults to 100.
         """
         self,i,steps,cultures,avg_similarities = self.run_simulation(n,acc)
         x = np.array(steps)
@@ -206,10 +206,11 @@ class Model:
                     current_id += 1
                 matrix[i, j] = culture_ids[culture]
         return matrix
+    
     def culture_matrix(self, culture_ids):
         """Create a matrix of cultures from self.
         Args:
-            culture_ids (_type_): _description_
+            culture_ids (dictionary): a dictionary of culture ids, obtained from culture_ids()
         Returns:
             matrix (ndarray): matrix of distinct cultures, coded by culture_ids
         """
@@ -221,13 +222,11 @@ class Model:
         return matrix
     
     def culture_ids(self,other):
-        """_summary_
-
+        """Create a dictionary of ids for distinct cultures between two models. Used in culture_matrix().
         Args:
-            other (_type_): _description_
-            
+            other (Model): second Model, can also be self.
         Returns:
-            _type_: _description_
+            all_cultures (disctionary): dictionary of distinct cultures with ids.
         """
         all_cultures = {}
         current_id = 0
@@ -241,20 +240,10 @@ class Model:
         return all_cultures
         
     def plot_grid(self,n,acc=100):
-        """ZRÓB TAK ŻEBY DZIAŁAŁO111111111111111
-        dodaj funkcję culture_matrix zeby nie powtarzac kodu bez sensu plus musi być współny słownik kolorów do obu wizualizacji
-        bo inaczej te same kolory oznaczają rózne kultury i troche to nie ma sensu, albo wgl usunąć, 
-        wsm trochę ma sensu bo bedzie widać czy się skupiaja
-        
-        moze jakby było mniej wymiarów to kodować kolory wg podobienstwa, np jakby były 3 featury to kazdy mialby 
-        jeden kanal znormalizowany rgb po q i imo by było widac na tych kolorach czy są kultury podbne do sb czy n
-        ale nwm czt to jest potrzebne, szczegolnie ze trochę nwm co z wyższymi wymiarami, może zlockować walor na jakims poziomie
-        przy mieszaniu kolorów (jak liczbowo mieszać kolory rgb bez zmiany jasności? nie wiem) i 
-        jasność bd kolejnym wymiarem, zawsze pozostają wzorki xD 
-
+        """Create two plots: a grid of distinct cultures in the model before and after the simulation, coded by colour.
         Args:
-            n (int): number of iterations in a simulation
-            acc (int, optional): accuracy of the simulation (go to -> run_simulation() for more info). Defaults to 100.
+            n (int): number of iterations in the simulation
+            acc (int, optional): accuracy (see: run_simulation() for more info). Defaults to 100.
         """
         
         model_before = copy.deepcopy(self) 
@@ -266,22 +255,17 @@ class Model:
         
         colormap = matplotlib.colors.ListedColormap(np.random.rand(len(all_cultures), 3))
 
-        plt.figure(figsize=(8,8))
-        plt.suptitle("Wizualizacja kultur w modelu Axelroda")
+        fig, axs = plt.subplots(1, 2, figsize=(8, 6))
+        plt.suptitle("\nWizualizacja różnorodności kultur w modelu Axelroda",fontsize="xx-large")
         
-        plt.subplot(1,2,1)
-        plt.imshow(matrix_bf, cmap=colormap)
-        plt.title("Początkowy stan modelu")
+        im = axs[0].imshow(matrix_bf,cmap=colormap,vmin=0,vmax=len(all_cultures)-1)
+        axs[1].imshow(matrix_af,cmap=colormap,vmin=0,vmax=len(all_cultures)-1)
         
-        plt.subplot(1,2,2)
-        plt.imshow(matrix_af, cmap=colormap)
-        plt.title("Końcowy stan modelu")
+        axs[0].set_title("Początkowy stan modelu")
+        axs[1].set_title(f"Końcowy stan modelu \n(po {n} iteracjach)")
         
-        
-        plt.tight_layout()
-        plt.colorbar(label="Kultura",location="top")
+        fig.colorbar(im,ax=axs,location="bottom",label="Kultura")
         plt.show()
-        
     
 def plot_q(q0,qN,a,b,n=1000):
     """Create a plot of number of different cultures in a function of the number of traits per feature.
@@ -357,3 +341,4 @@ if __name__ == "__main__":
     #model2.plot_t(1000)
     model2.plot_grid(100000) #to na razie nie działa
     #plot_q(2,25,5,20)
+    print(model.culture_ids(model))
