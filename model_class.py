@@ -163,7 +163,7 @@ class Model:
         """Create two plots after running the simulation: subplot 1 of cultures(time), subplot 2 of average_similarities(time)
         Args:
             n (int) : maximal number of iterations in the simulation
-            acc (int) : accuracy, number of iterations between each snapshot in the simulation, default 100
+            acc (int) : accuracy, number of iterations between each snapshot in the simulation, defaults to 100
         """
         self,i,steps,cultures,avg_similarities = self.run_simulation(n,acc)
         x = np.array(steps)
@@ -189,6 +189,22 @@ class Model:
         plt.tight_layout()
         plt.show()
         
+    def culture_matrix(self):
+        """Create a matrix of cultures from self.
+        Returns:
+            matrix (np.ndarray): matrix of cultures
+        """
+        culture_ids = {}
+        current_id= 0
+        matrix = np.zeros((self.grid_len, self.grid_len))
+        for i in range(self.grid_len):
+            for j in range(self.grid_len):
+                culture = tuple(self.grid[i][j].features)
+                if culture not in culture_ids:
+                    culture_ids[culture] = current_id
+                    current_id += 1
+                matrix[i, j] = culture_ids[culture]
+        return matrix
         
     def plot_grid(self,n,acc=100):
         """ZRÓB TAK ŻEBY DZIAŁAŁO111111111111111
@@ -203,40 +219,27 @@ class Model:
         jasność bd kolejnym wymiarem, zawsze pozostają wzorki xD 
 
         Args:
-            n (_type_): _description_
-            acc (int, optional): _description_. Defaults to 100.
+            n (int): number of iterations in a simulation
+            acc (int, optional): accuracy of the simulation (go to -> run_simulation() for more info). Defaults to 100.
         """
         
         model_before = copy.deepcopy(self) # żeby nie uciekało
-        model_after = self.run_simulation(n,acc)[0]
+        matrix_bf = model_before.culture_matrix()
         
-        culture_ids_bf = {}
-        current_id_bf = 0
-        matrix_bf = np.zeros((model_before.grid_len, model_before.grid_len))
-        for i in range(model_before.grid_len):
-            for j in range(model_before.grid_len):
-                culture = tuple(model_before.grid[i][j].features)
-
-                if culture not in culture_ids_bf:
-                    culture_ids_bf[culture] = current_id_bf
-                    current_id_bf += 1
-
-                matrix_bf[i, j] = culture_ids_bf[culture]
+        model_after = self.run_simulation(n,acc)[0]
+        matrix_af = model_after.culture_matrix
+        
+        all_cultures = matrix_bf
+        for i,j in matrix_af:
+            if matrix_af[i][j] not in all_cultures:
+                all_cultures.append(matrix_af[i][j])
                 
-        culture_ids_af = {}
-        current_id_af = 0
-        matrix_af = np.zeros((model_after.grid_len, model_after.grid_len))
-        for i in range(model_after.grid_len):
-            for j in range(model_after.grid_len):
-                culture = tuple(model_after.grid[i][j].features)
-
-                if culture not in culture_ids_af:
-                    culture_ids_af[culture] = current_id_af
-                    current_id_af += 1
-
-                matrix_af[i, j] = culture_ids_af[culture]
+        colormap = {} ##to na 100% tak nie działa xddddd
+        for iden in all_cultures(axis=0):
+            colormap.update({iden:iden/256})
 
         plt.figure(figsize=(8,8))
+        plt.suptitle("Wizualizacja kultur w modelu Axelroda")
         
         plt.subplot(1,2,1)
         plt.imshow(matrix_bf, cmap="tab20")
@@ -251,25 +254,28 @@ class Model:
         plt.tight_layout()
         plt.show()
         
-        
-    def plot_like_in_the_paper(self):
-        """Jak w nazwie, jeszcze nwm jak to zrobic ale bedzie zrobione, prototyp: PLOT_Q
-        """
-        pass
     
-def plot_q(n,N,a,b):
-    qs = range(n, N)
+def plot_q(q0,qN,a,b,n=1000):
+    """Create a plot of number of different cultures in a function of the number of traits per feature.
+    Args:
+        q0 (int): starting trait number
+        qN (int): ending trait number
+        a (int): number of features
+        b (int): length of grid(denoted L in the paper)
+        n (int, optional): number of iterations in the simulation. Defaults to 1000.
+    """
+    qs = range(q0, qN)
     final_cultures = []
     for q in qs:
         model = Model(nx.Graph(),feature_len=a,grid_len=b,traits_per_feature=q)
         model.create_grid()
-        model.run_simulation(1000)
+        model.run_simulation(n)
         final_cultures.append(
             len(model.distinct_agents_traits())
         )
     plt.plot(qs, final_cultures, 'o-')
     plt.xlabel("q (traits per feature)")
-    plt.ylabel("Liczba kultur po zbieżności")
+    plt.ylabel("Liczba kultur (po zbieżności)")
     plt.title("Przejście fazowe (?) w modelu Axelroda")
     plt.grid()
     plt.show()
