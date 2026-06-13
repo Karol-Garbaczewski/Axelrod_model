@@ -200,7 +200,7 @@ class Model:
         matrix = np.zeros((self.grid_len, self.grid_len))
         for i in range(self.grid_len):
             for j in range(self.grid_len):
-                culture = tuple(self.grid[i][j].features)
+                culture = tuple(self.grid[i][j].features.tolist())
                 if culture not in culture_ids:
                     culture_ids[culture] = current_id
                     current_id += 1
@@ -217,7 +217,7 @@ class Model:
         matrix = np.zeros((self.grid_len, self.grid_len), dtype=int)
         for i in range(self.grid_len):
             for j in range(self.grid_len):
-                culture = tuple(self.grid[i][j].features)
+                culture = tuple(self.grid[i][j].features.tolist())
                 matrix[i, j] = culture_ids[culture]
         return matrix
     
@@ -233,7 +233,7 @@ class Model:
         for model in [self, other]:
             for row in model.grid:
                 for agent in row:
-                    culture = tuple(agent.features)
+                    culture = tuple(agent.features.tolist())
                     if culture not in all_cultures:
                         all_cultures[culture] = current_id
                         current_id += 1
@@ -289,6 +289,7 @@ def plot_q(q0,qN,a,b,n=1000):
     plt.xlabel("q (traits per feature)")
     plt.ylabel("Liczba kultur (po zbieżności)")
     plt.title("Przejście fazowe (?) w modelu Axelroda")
+    plt.tight_layout()
     plt.grid()
     plt.show()
 
@@ -336,9 +337,9 @@ if __name__ == "__main__":
     #print(after_sim,t)
     #model.plot()
     #after_sim.plot()
-    model2 = Model(nx.Graph(), 7, 8, 10)
+    model2 = Model(nx.Graph(), 9, 8, 10)
     model2.create_grid()
-    #model2.plot_t(1000)
-    model2.plot_grid(100000) #to na razie nie działa
-    #plot_q(2,25,5,20)
+    model2.plot_t(100000)
+    model2.plot_grid(40000) #to na razie nie działa
+    plot_q(2,25,5,10,n=1000)
     print(model.culture_ids(model))
