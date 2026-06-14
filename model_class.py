@@ -279,6 +279,60 @@ class Model:
         
         fig.colorbar(im,ax=axs,location="bottom",label="Kultura")
         plt.show()
+        
+    def count_regions(self):
+        """Count number of regions in self. #Regions != #cultures.
+        Returns:
+            int: number of regions
+        """
+        visited = set()
+        regions = 0
+        for row in self.grid:
+            for agent in row:
+                if agent in visited:
+                    continue
+                regions += 1
+                target = tuple(agent.features)
+                stack = [agent]
+                while stack:
+                    current = stack.pop()
+                    if current in visited:
+                        continue
+                    if tuple(current.features) != target:
+                        continue
+                    visited.add(current)
+                    for neigh in self.get_neighbours(current):
+                        if neigh not in visited:
+                            stack.append(neigh)
+        return regions
+    
+def plot_regions_vs_L(L_values,F,q,trials=20,n=100000):
+    """Create a plot of mean number of different regions in the function of the length of grid, with F,q=const. Specjalnie na życzenie Karola.
+    Args:
+        L_values (list): list of lengths of grid
+        F (int): number of features
+        q (int): number of traits per feature
+        trials (int, optional): number of iterations before calculating the mean number. Defaults to 20.
+        n (int, optional): number of iterations in the simulation. Defaults to 100000.
+    """
+    mean_regions = []
+    for L in L_values:
+        regions = []
+        for _ in range(trials):
+            model = Model(nx.Graph(),feature_len=F,grid_len=L,traits_per_feature=q)
+            model.create_grid()
+            final_model = model.simulated(n,100)
+            regions.append(final_model.count_regions())
+        mean_regions.append(np.mean(regions))
+        
+    plt.figure(figsize=(8,5))
+    plt.plot(L_values,mean_regions,"o-")
+    plt.xlabel("L (długość boku siatki - grid_len)")
+    plt.ylabel("Średnia liczba regionów")
+    plt.title(f"F={F}, q={q}, próby={trials}, iteracje={n}")
+    plt.suptitle("Zależność średniej liczby regionów od długości boku siatki")
+    plt.grid()
+    plt.show()
     
 def plot_q(q0,qN,a,b,n=100000):
     """Create a plot of number of different cultures in a function of the number of traits per feature.
@@ -353,6 +407,7 @@ if __name__ == "__main__":
     model2.create_grid()
     model2.plot_t(10000)
     model2.plot_grid(10000)
-    #plot_q(2,25,5,10,n=1000)
+    plot_q(2,25,5,10,n=1000)
     #print(model.culture_ids(model))
+    #plot_regions_vs_L([5,10,15,20,25,30,35,40],5,15,n=1000)
     
