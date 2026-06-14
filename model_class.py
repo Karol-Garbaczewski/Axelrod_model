@@ -133,13 +133,25 @@ class Model:
             similarities.append(u.is_similar(v))
         return np.mean(similarities)
     
-    def run_simulation(self,n,acc=100):
-        """Run the simulation of self for n steps or until it has converged if it happened faster.
+    def simulated(self,n,acc=100):
+        """Run the simulation of self for n steps or until it has converged if it happened faster. This method does **NOT change** self.
         Args:
             n (int) : maximal number of iterations
             acc (int) : accuracy, number of iterations between each snapshot, default 100
         Returns:
-            self (Model) : the self model after the simulation
+            model_copy (Model) : the self model after the simulation, a new instance of Model
+        """
+        model_copy = copy.deepcopy(self)
+        model_copy.run_simulation(n, acc)
+        return model_copy
+    
+    def run_simulation(self,n,acc=100):
+        """Run the simulation of self for n steps or until it has converged if it happened faster. This method **changes** self.
+        Args:
+            n (int) : maximal number of iterations
+            acc (int) : accuracy, number of iterations between each snapshot, default 100
+        Returns:
+            self (Model) : the self model after the simulation, changed
             i (int) : number of iteration +1
             steps (int) : number of steps, taken every acc iterations
             cultures (int) : number of distinct cultures (Agents with distinct features), taken every acc iterations
@@ -161,12 +173,13 @@ class Model:
         return self,i,steps,cultures,avg_similarities
     
     def plot_t(self,n,acc=100):
-        """Create two plots after running the simulation: subplot 1 of cultures(time), subplot 2 of average_similarities(time).
+        """Create two plots after running the simulation: subplot 1 of cultures(time), subplot 2 of average_similarities(time). This method does **NOT change** self.
         Args:
             n (int) : maximal number of iterations in the simulation.
             acc (int) : accuracy, number of iterations between each snapshot in the simulation, defaults to 100.
         """
-        self,i,steps,cultures,avg_similarities = self.run_simulation(n,acc)
+        model_copy = copy.deepcopy(self)
+        model_after,i,steps,cultures,avg_similarities = model_copy.run_simulation(n,acc)
         x = np.array(steps)
         y1 = np.array(cultures)
         
@@ -246,11 +259,11 @@ class Model:
             acc (int, optional): accuracy (see: run_simulation() for more info). Defaults to 100.
         """
         
-        model_before = copy.deepcopy(self) 
-        model_after = self.run_simulation(n,acc)[0]
-        all_cultures = model_before.culture_ids(model_after)
+        model_copy = copy.deepcopy(self) 
+        model_after = model_copy.run_simulation(n,acc)[0]
+        all_cultures = self.culture_ids(model_after)
         
-        matrix_bf = model_before.culture_matrix(all_cultures)
+        matrix_bf = self.culture_matrix(all_cultures)
         matrix_af = model_after.culture_matrix(all_cultures)
         
         colormap = matplotlib.colors.ListedColormap(np.random.rand(len(all_cultures), 3))
@@ -292,105 +305,6 @@ def plot_q(q0,qN,a,b,n=100000):
     plt.tight_layout()
     plt.grid()
     plt.show()
-
-def plot_grid(self,n,acc=100):
-        """Create two plots: a grid of distinct cultures in the model before and after the simulation, coded by colour.
-        Args:
-            n (int): number of iterations in the simulation
-            acc (int, optional): accuracy (see: run_simulation() for more info). Defaults to 100.
-        """
-        
-        model_before = copy.deepcopy(self) 
-        model_after = self.run_simulation(n,acc)[0]
-        all_cultures = model_before.culture_ids(model_after)
-        
-        matrix_bf = model_before.culture_matrix(all_cultures)
-        matrix_af = model_after.culture_matrix(all_cultures)
-        
-        colormap = matplotlib.colors.ListedColormap(np.random.rand(len(all_cultures), 3))
-
-        fig, axs = plt.subplots(1, 2, figsize=(8, 6))
-        plt.suptitle("\nWizualizacja różnorodności kultur w modelu Axelroda",fontsize="xx-large")
-        
-        im = axs[0].imshow(matrix_bf,cmap=colormap,vmin=0,vmax=len(all_cultures)-1)
-        axs[1].imshow(matrix_af,cmap=colormap,vmin=0,vmax=len(all_cultures)-1)
-        
-        axs[0].set_title("Początkowy stan modelu")
-        axs[1].set_title(f"Końcowy stan modelu \n(po {n} iteracjach)")
-        
-        fig.colorbar(im,ax=axs,location="bottom",label="Kultura")
-        plt.show()
-        
-def simulation_trial(model):
-    model_before = copy.deepcopy(model)
-    row, col = np.random.randint(0, model.grid_len), np.random.randint(0, model.grid_len)  # random 'active agent'
-    neighbors = model.get_neighbours(model.grid[row][col])
-    random_neighbor = random.choice(neighbors)  # random its neighbor
-    similarity = model.grid[row][col].is_similar(random_neighbor)
-    if np.random.uniform() < similarity:
-        model.grid[row][col].change_feature(random_neighbor.features)
-    return model,model_before
-        
-def run_simulation(model,n,acc=100):
-    """Run the simulation of self for n steps or until it has converged if it happened faster.
-    Args:
-        n (int) : maximal number of iterations
-        acc (int) : accuracy, number of iterations between each snapshot, default 100
-    Returns:
-        self (Model) : the self model after the simulation
-        i (int) : number of iteration +1
-        steps (int) : number of steps, taken every acc iterations
-        cultures (int) : number of distinct cultures (Agents with distinct features), taken every acc iterations
-        avg_similarities (np.float(64)) : value of average similarity between each pair of Agents, taken every acc iterations
-    """
-    model_before = copy.deepcopy(model)
-    steps=[]
-    cultures=[]
-    avg_similarities=[]
-    i=1
-    while i<=n:
-        model_after,model_before = simulation_trial(model)
-        if i % acc == 0:
-            steps.append(i)
-            cultures.append(len(model_after.distinct_agents_traits()))
-            avg_similarities.append(model_after.avg_similarity())
-        if i % 1000 == 0 and model_after.has_converged():
-            break
-        i+=1
-    return model_after,i,steps,cultures,avg_similarities,model_before
-    
-def plot_t(model,n,acc=100):
-    """Create two plots after running the simulation: subplot 1 of cultures(time), subplot 2 of average_similarities(time).
-    Args:
-        n (int) : maximal number of iterations in the simulation.
-        acc (int) : accuracy, number of iterations between each snapshot in the simulation, defaults to 100.
-    """
-    model_before = copy.deepcopy(model)
-    model_after,i,steps,cultures,avg_similarities,model_old = run_simulation(model,n,acc)
-    x = np.array(steps)
-    y1 = np.array(cultures)
-    
-    plt.figure(figsize=(10,4))
-    plt.suptitle(f"Model Axelroda \n features = {model.feature_len}, traits per feature = {model.traits_per_feature}, siatka = {model.grid_len}x{model.grid_len}")
-    
-    plt.subplot(1,2,1)
-    plt.plot(x,y1)
-    plt.xlabel("kroki czasowe")
-    plt.ylabel("liczba kultur")
-    plt.title("Liczba kultur (różnych rodzajów agentów)")
-    plt.grid(True)
-    
-    plt.subplot(1,2,2)
-    plt.plot(steps,avg_similarities)
-    plt.xlabel("kroki czasowe")
-    plt.ylabel("średnie podobieństwo")
-    plt.title("Średnie podobieństwo agentów w całym grafie")
-    plt.grid(True)
-    
-    plt.tight_layout()
-    plt.show()
-    model = model_before
-    return model_old
 
 if __name__ == "__main__":
 
@@ -437,10 +351,8 @@ if __name__ == "__main__":
     #after_sim.plot()
     model2 = Model(nx.Graph(), 9, 8, 10)
     model2.create_grid()
-    #model2.plot_t(100000)
-    #model2.plot_grid(100000)
+    model2.plot_t(10000)
+    model2.plot_grid(10000)
     #plot_q(2,25,5,10,n=1000)
     #print(model.culture_ids(model))
     
-    plot_t(model2,10000)
-    plot_grid(model2,10000)
