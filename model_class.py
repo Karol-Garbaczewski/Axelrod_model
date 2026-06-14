@@ -409,5 +409,5 @@ if __name__ == "__main__":
     model2.plot_grid(10000)
     plot_q(2,25,5,10,n=1000)
     #print(model.culture_ids(model))
-    #plot_regions_vs_L([5,10,15,20,25,30,35,40],5,15,n=1000)
+    plot_regions_vs_L([5,10,15,20,25,30,35,40],5,15,n=1000)
     
