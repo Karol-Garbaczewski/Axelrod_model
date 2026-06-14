@@ -306,6 +306,34 @@ class Model:
                             stack.append(neigh)
         return regions
     
+    def largest_region_size(self):
+        """Calculate the size of the largest region (region != culture)
+        Returns:
+            int : the size of the largest region.
+        """
+        visited = set()
+        largest = 0
+        for row in self.grid:
+            for agent in row:
+                if agent in visited:
+                    continue
+                culture = tuple(agent.features)
+                stack = [agent]
+                size = 0
+                while stack:
+                    current = stack.pop()
+                    if current in visited:
+                        continue
+                    if tuple(current.features) != culture:
+                        continue
+                    visited.add(current)
+                    size += 1
+                    for neigh in self.get_neighbours(current):
+                        if neigh not in visited:
+                            stack.append(neigh)
+                largest = max(largest, size)
+        return largest
+    
 def plot_regions_vs_L(L_values,F,q,trials=20,n=100000):
     """Create a plot of mean number of different regions in the function of the length of grid, with F,q=const. Specjalnie na życzenie Karola.
     Args:
@@ -359,6 +387,40 @@ def plot_q(q0,qN,a,b,n=100000):
     plt.tight_layout()
     plt.grid()
     plt.show()
+    
+def plot_q_paperlike(q0,qN,a,b,trials=20,n=100000,logscale=False):
+    """Create a plot of the largest region normalized by L^2 in a function of the number of traits per feature. Note: needs optimalization, takes a really REALLY long time to compute.
+    Args:
+        q0 (int): starting trait number
+        qN (int): ending trait number
+        a (int): number of features
+        b (int): length of grid(denoted L in the paper)
+        n (int, optional): number of iterations in the simulation. Defaults to 100000.
+        trials (int, optional): number of trials before calculating a mean value. Defaults to 20.
+        logscale (bool): logarithimic scale for q. Defaults to False (linear scale for q).
+    """
+    qs = range(q0, qN)
+    smax_values = []
+    b2=b**2
+    for q in qs:
+        values = []
+        for _ in range(trials):
+            model = Model(nx.Graph(),feature_len=a,grid_len=b,traits_per_feature=q)
+            model.create_grid()
+            model.run_simulation(n)
+            values.append(model.largest_region_size() / (b2))
+        smax_values.append(np.mean(values))
+    plt.plot(qs, smax_values, 'o-')
+    if logscale==True:
+        plt.xscale("log")
+    plt.xlabel("q")
+    plt.ylabel(r"$\langle S_{max}/L^2 \rangle$")
+    plt.title(f"Model Axelroda (F={a}, L={b})")
+    plt.grid(True)
+    plt.tight_layout()
+    plt.show()    
+    
+    
 
 if __name__ == "__main__":
 
@@ -405,9 +467,10 @@ if __name__ == "__main__":
     #after_sim.plot()
     model2 = Model(nx.Graph(), 9, 8, 10)
     model2.create_grid()
-    model2.plot_t(10000)
-    model2.plot_grid(10000)
-    plot_q(2,25,5,10,n=1000)
+    #model2.plot_t(10000)
+    #model2.plot_grid(10000)
+    #plot_q(2,25,5,10,n=1000)
     #print(model.culture_ids(model))
-    plot_regions_vs_L([5,10,15,20,25,30,35,40],5,15,n=1000)
+    #plot_regions_vs_L([5,10,15,20,25,30,35,40],5,15,n=1000)
+    #plot_q_paperlike(2,10,2,50,trials=1,n=100_000)
     
