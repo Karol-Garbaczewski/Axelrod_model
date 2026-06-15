@@ -53,7 +53,7 @@ class Agent:
             index_to_change = np.random.choice(indices)  # choose only from
             self.features[index_to_change] = adj_site_features[index_to_change]
 
-    def is_similar(self, second_agent: Agent):
+    def is_similar(self, second_agent: "Agent"):
         """ checks similarity between agents, example: [1,3,0], [1,0,3] -similarity 1/3
         :returns p - similarity (prawdopodobieństwo interakcji)"""
         mask = self.features == second_agent.features
