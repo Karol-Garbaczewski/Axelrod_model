@@ -403,12 +403,12 @@ def plot_q_paperlike(q0,qN,a,b,trials=20,n=100000,logscale=False):
     smax_values = []
     b2=b**2
     for q in qs:
-        values = []
-        for _ in range(trials):
+        values = np.zeros(trials)
+        for trial in range(trials):
             model = Model(nx.Graph(),feature_len=a,grid_len=b,traits_per_feature=q)
             model.create_grid()
-            model.run_simulation(n)
-            values.append(model.largest_region_size() / (b2))
+            model.run_simulation(n) # NIE INTERESUJĄ NAS SNAPSHOTS - ZMIEN TO BO LICZY TO DISTICNT FEATURES W KOLKO I SIE DO DOLICZA
+            values[trial] = model.largest_region_size() / b2
         smax_values.append(np.mean(values))
     plt.plot(qs, smax_values, 'o-')
     if logscale==True:
@@ -451,12 +451,6 @@ if __name__ == "__main__":
         print(random_neighbor, "neighbor")
         print(model.grid[row][col], "active agent")
 
-    # Simulation example
-    for i in range(100000):
-        model.simulation_trial()
-        if i % 1000 == 0 and model.has_converged():
-            print(f"Model has converged in {i} steps")
-            break
     print(model)
     print(model.distinct_agents_traits())
     
@@ -468,9 +462,9 @@ if __name__ == "__main__":
     model2 = Model(nx.Graph(), 9, 8, 10)
     model2.create_grid()
     #model2.plot_t(10000)
-    #model2.plot_grid(10000)
+    model2.plot_grid(10000)
     #plot_q(2,25,5,10,n=1000)
     #print(model.culture_ids(model))
     #plot_regions_vs_L([5,10,15,20,25,30,35,40],5,15,n=1000)
-    #plot_q_paperlike(2,10,2,50,trials=1,n=100_000)
+    plot_q_paperlike(2,8,2,50,trials=1,n=100_000)
     
