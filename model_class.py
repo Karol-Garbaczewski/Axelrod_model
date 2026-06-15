@@ -113,7 +113,6 @@ class Model:
 
         if np.random.uniform() < similarity:
             if 0 < similarity < 1:
-                self.grid[row][col].change_feature(random_neighbor.features)
                 # substracting the agent's input into total similarity and active edges
                 for nbr in neighbors:
                     old_sim = agent.is_similar(nbr)
@@ -208,6 +207,7 @@ class Model:
         Args:
             n (int) : maximal number of iterations in the simulation.
             acc (int) : accuracy, number of iterations between each snapshot in the simulation, defaults to 100.
+        Returns : The model after simulation
         """
         model_copy = copy.deepcopy(self)
         model_after, i, steps, cultures, avg_similarities = model_copy.run_simulation(n, acc)
@@ -234,7 +234,7 @@ class Model:
 
         plt.tight_layout()
         plt.show()
-
+        return model_after
     def culture_matrix_deprecated(self):
         """Create a matrix of cultures from self. Deprecated, see: culture_matrix().
         Returns:
@@ -289,6 +289,7 @@ class Model:
         Args:
             n (int): number of iterations in the simulation
             acc (int, optional): accuracy (see: run_simulation() for more info). Defaults to 100.
+        Returns: model after simulation
         """
 
         model_copy = copy.deepcopy(self)
@@ -311,6 +312,7 @@ class Model:
 
         fig.colorbar(im, ax=axs, location="bottom", label="Kultura")
         plt.show()
+        return model_after
 
     def count_regions(self):
         """Count number of regions in self. #Regions != #cultures.
@@ -465,10 +467,12 @@ if __name__ == "__main__":
     # print(after_sim,t)
     # model.plot()
     # after_sim.plot()
-    model2 = Model(nx.Graph(), 9, 8, 10)
+    model2 = Model(nx.Graph(), 5, 5, 8)
     model2.create_grid()
     #model2.plot_t(100_000)
-    #model2.plot_grid(100_000)
+    model_after = model2.plot_grid(2_000_000)
+    print(model_after.distinct_agents_traits())
+    print(model_after.has_converged())
     #plot_q(2, 25, 5, 10, n=100_000)
     # print(model.culture_ids(model))
     #plot_regions_vs_L([5,10,30,40,50],5,5, trials=5, n=10_000_000)
