@@ -64,19 +64,30 @@ class Agent:
 
 
 class Model:
-    def __init__(self, graph: nx.Graph, feature_len: int, grid_len: int, traits_per_feature: int):
+    def __init__(self, graph: nx.Graph, feature_len: int, grid_len: int, traits_per_feature: int, neighbourhood="standard"):
         self.active_edges = None
         self.total_similarity = None
         self.graph = graph
         self.feature_len = feature_len
         self.grid_len = grid_len
         self.traits_per_feature = traits_per_feature
+        self.neighbourhood = neighbourhood
         self.grid = [[Agent(self.traits_per_feature, self.feature_len) for i in range(self.grid_len)] for j in
                      range(self.grid_len)]  # 2d matrix that help to locate agent
 
     def create_grid(self):
         """Fills up the graph from self.graph"""
-        directions = [(1, 0), (0, 1)]  # predefined neighbourhood
+        if self.neighbourhood == "standard":
+            directions = [(1, 0), (0, 1)]  # predefined standard neighbourhood
+            periodic = False
+        elif self.neighbourhood == "extended":
+            directions = [(1, 0), (0, 1), (1, 1), (1, -1)] # predefined extended neighbourhood
+            periodic = False
+        elif self.neighbourhood == "toroidal":
+            directions = [(1, 0), (0, 1)] # toroidal neighbourhood
+            periodic = True
+        else:
+            raise ValueError(f"Nieznane neighbourhood: {self.neighbourhood}")
 
         # Adding edges
         for row in range(self.grid_len):
@@ -84,8 +95,15 @@ class Model:
                 for dx, dy in directions:
                     x = row + dx
                     y = col + dy
-                    if 0 <= x < self.grid_len and 0 <= y < self.grid_len:
+                    
+                    if periodic == True:
+                        x %= self.grid_len
+                        y %= self.grid_len
                         self.graph.add_edge(self.grid[row][col], self.grid[x][y], color="black")
+                    else:
+                        if 0 <= x < self.grid_len and 0 <= y < self.grid_len:
+                            self.graph.add_edge(self.grid[row][col], self.grid[x][y], color="black")
+
         # Trying to optimize has converged func
         self.total_similarity = 0.0
         self.active_edges = 0
