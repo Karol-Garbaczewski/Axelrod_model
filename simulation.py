@@ -1,21 +1,17 @@
 from model_class import Agent, Model, plot_q, plot_q_paperlike, plot_regions_vs_L
 import networkx as nx
-import numpy as np
-import matplotlib.pyplot as plt
-import copy
-
 
 if __name__ == "__main__":
 
     model = Model(
         nx.Graph(), 
-        feature_len=6, 
-        grid_len=25, 
+        feature_len=3, 
+        grid_len=18, 
         traits_per_feature=6, 
         neighbourhood="standard")
     
     model.create_grid()
-    model.plot_grid(3_000_000, acc=50)
+    model.plot_grid(1_300_000, acc=50)
 
     model = Model(
         nx.Graph(),
