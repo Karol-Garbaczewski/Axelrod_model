@@ -14,19 +14,30 @@ if __name__ == "__main__":
         neighbourhood="standard")
     
     model.create_grid()
-    model.plot_grid(100_000)
+    #model.plot_grid(100_000)
 
     model = Model(
         nx.Graph(),
         feature_len=5,
         grid_len=20,
         traits_per_feature=5,
-        neighbourhood="standard"
-    )
+        neighbourhood="standard")
     model.create_grid()
-    model.plot_t(100_000)
+    #model.plot_t(100_000)
+
+    model = Model(
+        nx.Graph(),
+        feature_len=5,
+        grid_len=20,
+        traits_per_feature=5,
+        neighbourhood="standard")
+
+    #plot_q(2, 25, 5, 10, n=100_000)
+    plot_q_paperlike(1, 25, 5, 10, trials=10, n=1_000_000)
+    #plot_regions_vs_L([5,10,30,40,50],5,5, trials=5, n=10_000_000)
     
-    qs = range(2, 15)
+    
+    """qs = range(2, 15)
     trials = 20
     means = []
     stds = []
@@ -99,4 +110,4 @@ if __name__ == "__main__":
 
     plt.bar(neighs, means)
     plt.title("neighbourhood comparison (mean cultures)")
-    plt.show()
+    plt.show()"""
