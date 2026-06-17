@@ -14,7 +14,8 @@ if __name__ == "__main__":
         neighbourhood="standard")
     
     model.create_grid()
-    #model.plot_grid(100_000)
+    model.plot_grid(100_000)
+    print(model.has_converged())
 
     model = Model(
         nx.Graph(),
