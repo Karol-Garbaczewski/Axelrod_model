@@ -329,6 +329,12 @@ class Model:
         axs[1].set_title(f"Końcowy stan modelu \n(po {n} iteracjach)")
 
         fig.colorbar(im, ax=axs, location="bottom", label="Kultura")
+
+        if model_copy.has_converged():
+            print(f"Ustabilizował się")
+        else:
+            print(f"Nie ustabilizował się")
+
         plt.show()
         return model_after
 
