@@ -26,57 +26,57 @@
 \begin{document}
 	\maketitle
 	\section{Wprowadzenie}
-	Główny problem przedstawiony w arytkule Roberta Axelroda 
+	Główny problem przedstawiony w artykule Roberta Axelroda 
 	z 1997 roku pt. „The Dissemination of Culture: 
 	A Model with Local Convergence and Global Polarization”
-	jest zagadnienie: wiedząc, że wiekszość ludzi upodabnia się do siebie podczas interakcji, 
-	to dlaczego cała ludzkość nie stała się jedną monokulturą.
+	to następujące zagadnienie: wiedząc, że wiekszość ludzi upodabnia się do siebie podczas interakcji, 
+	dlaczego cała ludzkość nie stała się jedną monokulturą?
 	Axelrod proponuje model oparty na agentach i 
 	wielowymiarowych strukturach, twierdząc, że upodobnianie się sąsiadów paradoksalnie 
 	prowadzi do trwałego podziału na całkowicie odmienne obozy (globalne polaryzacje).
-	Autor proponuję nowatorski model odmmiennych od dotychczasowych, które 
+	Autor proponuję nowatorski model odmmienny od dotychczasowych, które 
 	ograniczają się tylko do jednej poszczególnej cechy.
 	\subsection{Tło historyczne}
 	W połowie lat 90. XX wieku nastąpił gwałtowny rozwój Internetu, 
 	telewizji satelitarnej oraz globalnego handlu.
 	Wielu socjologów i politologów wieszczyło szybki
 	 koniec różnorodności kulturowej - wchłonięte zostaną lokalne tradycje i obyczaje.
-	Jednocześnie równolegle istniały na świecie trwały konflikty
+	Jednocześnie, równolegle na świecie trwały konflikty
 	 o podłożu etnicznym i kulturowym np. wojna w byłej Jugosławii, ludobójstwo w Rwandzie.
-	Axelrold wykorzytsał podejście z fizyki statystycznej (modele spinowe), 
+	Axelrod wykorzystał podejście z fizyki statystycznej (modele spinowe), 
 	gdzie zderzenie pojedynczych cząstek generuje stan całego układu.
 
 
 	\section{Założenia modelu}
 	 
 	Zgodnie z naturalnie dostrzeganą zależnością,
-	jesteśmy skłonni wchodzić w interkacje chętniej z osobami podbnymi do nas 
+	jesteśmy skłonni wchodzić w interakcje chętniej z osobami podbnymi do nas 
 	- komunikacja zachodzi tylko wtedy,
 	gdy agenci (jednostki) mają już ze sobą coś wspólnego. 
-	Takie zjawisko nazywane jest tytułową homofilia
+	Takie zjawisko nazywane jest tytułową homofilią
 	 (z języka greckiego - przyjaźń do tego samego).
-	\subsection{Konstukcja}
-	Axelrod formułuje kulturę jako
-	wektor cech np. religia, podobny język, poglądy. Dla każdej cechy istnieje zestaw dopuszczalnych wariantów.
-	Dla przykładu 8, 7, 2, 5, 4 oznacza, że kultura zakłada 5 cech, a każda ma 10 wariantów.
+	\subsection{Konstrukcja}
+	Axelrod opisuje kulturę jako
+	wektor cech, np. religia, podobny język, poglądy. Dla każdej cechy istnieje zestaw dopuszczalnych wariantów.
+	Dla przykładu, \( (8, 7, 2, 5, 4) \) oznacza, że kultura zakłada 5 cech, a każda z nich ma 10 wariantów.
 	Agenci  rozmieszczeni są na siatce, mogąc wchodzić w interakcje
 	wyłącznie ze swoimi bezpośrednimi sąsiadami z prawdopodobieństwem 
-	proporcjonalnym do ich obecnego podobieństwa kulturowego, czyli ilości wspólnych cech. 
+	proporcjonalnym do ich obecnego podobieństwa kulturowego, czyli liczby wspólnych cech. 
 	Interakcja polega na wylosowaniu cechy, którą się różnią, 
-	i zmianie wariantu cechy wybranego agenta na wariant sąsiada, czyli asymilują.
+	i zmianie wariantu cechy wybranego agenta na wariant sąsiada, czyli asymilacji.
 
 	Gdy dwaj sąsiedzi wchodzą w interakcję, ich podobieństwo rośnie, 
 	co zwiększa szansę na kolejne interakcje w przyszłości.
 	System osiąga punkt stabilny, gdy każda para sąsiadujących ze 
-	sobą jednostek ma kulturowo albo całkowite prawdopodobieństwo,
+	sobą jednostek ma kulturowo całkowite prawdopodobieństwo, tj. \(0\) lub \(1\),
 	czyli kolejne interakcje nic nie zmieniają albo w przeciwnym wypadku interakcje
-	 nie są już możliwe. Obserwujemy wtedy powstanie regionów wspólne kulturowo.
+	 nie są już możliwe. Obserwujemy wtedy powstawanie regionów identycznych kulturowo.
 
 	\subsection{Schemat konstrukcji}
 	\begin{enumerate}
 		\item Losowanie: Program wybiera losowo aktywnego agenta oraz jednego z jego sąsiadów.
 		\item Prawdopodobieństwo interakcji: agenci wejdą w interkację w zależności 
-		od aktualnego podobieństwa kulturowego (np. dla 3 cech wspolnych na 5 prawdopodobieństwo wynosi 60\%, a gdy brak wspólnych to nie dochodzi do interakcji).
+		od aktualnego podobieństwa kulturowego (np. dla 3 cech wspólnych na 5 prawdopodobieństwo wynosi 60\%, a gdy brak wspólnych to nie dochodzi do interakcji).
 		\item Modyfikacja cechy: agent losowo przyjmuję jedną cechę sąsiada, czyli zwiększa podobieństwo kulturowe.
 	\end{enumerate}
 
@@ -84,9 +84,9 @@
 	\begin{enumerate}
 		\item Na początku agenci mają losowo przypisane warianty kulturowe. 
 		Większość sąsiadów ma ze sobą bardzo mało wspólnego (dużo różnych kolorów na rys. 1).
-		\item W miarę upływu czasu (zdarzeniach) lokalne interakcje powodują, że wspólne warianty kulturowe 
-		rozprzestrzeniają się na coraz większe obszary( regiony kulturowe).
-		\item Stan stacjonarny: Proces kończy się i stabilizuje, gdy żadna para sąsiadujących jednostek 
+		\item W miarę upływu czasu (zdarzeń) lokalne interakcje powodują, że wspólne warianty kulturowe 
+		rozprzestrzeniają się na coraz większe obszary (regiony kulturowe).
+		\item Stan stacjonarny: proces kończy się i stabilizuje, gdy żadna para sąsiadujących jednostek 
 		nie może już zmienić swojej kultury (całkowicie identyczni albo całkowicie odmienni).
 		\item Wynik końcowy to globalna polaryzacja, czyli kilka całkowicie odizolowanych od siebie, 
 		stabilnych regionów kulturowych.  
@@ -160,7 +160,7 @@ JAKI POWOD SPEKULACJA
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{assets/compare_neighbourhoods_2.png}
-			\caption{PIERWSZA SYM}
+			\caption{Symulacja A}
 			
 		\end{figure}
 
@@ -168,7 +168,7 @@ JAKI POWOD SPEKULACJA
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{assets/compare_neighbourhoods_3.png}
-			\caption{DRUGA SYM}
+			\caption{Symulacja B}
 			
 		\end{figure}
 
@@ -177,13 +177,13 @@ JAKI POWOD SPEKULACJA
 	\section{Wnioski końcowe}
 
 	Najważniejszy wniosek płynący z badań Axelroda wskazuje, że dążenie do lokalnego podobieństwa
-	paradoksalnie uniemożliwia całkowite ujednolicenie całego społeczeństwa i utrwala  
+	paradoksalnie uniemożliwia całkowite ujednolicenie całego społeczeństwa i cementuje  
 	trwałe podziały kulturowe na poziomie globalnym (wyspy wspólne kulturowo).
 
 	Im więcej cech opisuje kulturę, tym mniej stabilnych regionów kulturowych pozostaje na końcu 
 	(sprzeczne z intuicją). Dzieje się tak, ponieważ większa liczba cech statystycznie
-	 zwiększa szansę posiadania jednego wspólnego elementu, czyli umożliwia interkacje
-	  i dalsze zwiększanie wspólnych cech.
+	 zwiększa szansę posiadania jednego wspólnego elementu, czyli umożliwia interakcje
+	  i dalsze zwiększanie liczby wspólnych cech.
 	
 
 
@@ -191,18 +191,18 @@ JAKI POWOD SPEKULACJA
 	%modfikacja modelu
 	\subsection{Analiza trudności}
 	\begin{itemize}
-	\item różne metody nie kłóciły się ze sobą i nie psuły nawzajem wyników
-	\item przeprowadzanie symulacji nie zmieniało nieodwracalnie badanego układu (można było do niego wrócić)
-	\item dobranie czytelnie kolorów
-	\item projektowanie obiektowe (klasy)
-	\item praca w grupie w szczególności w pisaniu kodu
+	\item zadbanie, aby różne metody klasy \emph{Model} nie kłóciły się ze sobą i nie psuły nawzajem wyników
+	\item przeprowadzanie symulacji bez nieodwracalnej zmiany badanego układu (aby można było do niego wrócić sprzed stanu symulacji)
+	\item klarowne, przejrzyste dobranie kolorów indywidualnych kultur
+	\item projektowanie obiektowe (klasy \emph{Agent} i \emph{Model})
+	\item praca w grupie, podział zadań, w szczególności w pisaniu kodu
 	\item największą trudnością w implementacji w Pythonie okazała się optymalizacja.
 
 	\end{itemize}	  
 	Ogólnie, żeby całość miała ręce i nogi.
 
-	Z łatwych rzeczy fajnie sie implementowało samą podstawę modelu klasy agent i model.
-	Bardzo przyjemne szybko można było zacząć bawić się dynamiką modelu nawet bez plotów.
+	Z łatwych rzeczy, fajnie sie implementowało samą podstawę modelu klasy \emph{Agent} i \emph{Model}.
+	Bardzo przyjemnie i szybko można było zacząć bawić się dynamiką modelu, nawet bez plotów.
     
     \begin{itemize}
 
@@ -230,33 +230,14 @@ JAKI POWOD SPEKULACJA
 	%i te do a-d 
 	\section{Podział pracy w grupie}
 		\begin{itemize}
-			\item Sasza T., Karol G. -> implementacja modelu w języku programowania "Python", programowanie obiektowe agentów, stworzenie funkcji symulacji, tworzenie wykresów w "Matplotlib", aspekt programistyczny  
+			\item Sasza T., Karol G. -> implementacja modelu w języku programowania \emph{Python}, programowanie obiektowe agentów i modelu, stworzenie funkcji symulacji, tworzenie wykresów w \emph{Matplotlib}, aspekt programistyczny  
 			
-			\item Szymon Gź., Zofia S. ->merytoryczne interpretacja danych z artykułu, symulowanie wyników na podstawie parametrów,
+			\item Szymon Gź., Zofia S. -> merytoryczna interpretacja danych z artykułu, symulowanie wyników na podstawie parametrów,
 			aspekt humanistyczny przygotowania raportu w \LaTeX
 		\end{itemize}
 
 	\section{Bibliografia}
 	„The Dissemination of Culture: 
 	A Model with Local Convergence and Global Polarization” Roberta Axelrod 97
-
-
-
-
-
-%########################################################
-	%na koniec to usuniemy
-
-dzial???????????????\\
-	• Wyniki w formie wykresów (optymalnie dwa): zestawienie wyniku odtworzonego z
-	publikacji z nowym wynikiem uzyskanym po modyfikacji modelu.\\
-	• Wnioski i przemyślenia:\\
-
-
-	b) ciekawostki (przede wszystkim zaskakujące zachowania modelu, ale również inne
-	nieoczekiwane aspekty realizacji Projektu),\\
-	
-
-
 
 \end{document}
