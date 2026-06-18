@@ -164,9 +164,13 @@
     Innym pomysłem jest zadbanie o to, aby agenci na brzegach macierzy nie byli poszkodowani mniejszą liczbą sąsiadów. Dochodzimy do tego poprzez połączenie agenta z jednego brzegu z agentem z brzegu przeciwnego. W praktyce, agent na lewym brzegu jest połączony z agentem tego samego wiersza na prawym brzegu, a np. agent w lewym górnym rogu jest połączony z agentem w prawym dolnym rogu. Sąsiedztwo takie nazwiemy \emph{toroidal}, jako przypominające wzięcie brzegów macierzy i połączenie ich jak torrusa.
 
     Sprawdziliśmy i porównaliśmy symulacyjnie, jak ma się sprawa zbieżności i liczby regionów dla różnych sąsiedztw.
- 1. extended > torroidal > stadard
-2. inaczej 
-JAKI POWOD SPEKULACJA
+	Wyniki symulacji są, w naszej ocenie, naprawdę intuicyjne.
+	 Mimo dużej losowości modelu, łatwo przewidzieć jak zmiana parametrów wpływa na szybkość 
+	 zbiegania czy liczbę skrystalizowanych regionów kulturowych. Łatwo było również przewidzieć
+	  jak rozszerzenie modelu o więcej sąsiadów daje większe możliwości wymiany kulturowej, a 
+	  więc szybsze ujednolicenie.
+
+
 
 		\begin{figure}[H]
 			\centering
@@ -215,16 +219,7 @@ JAKI POWOD SPEKULACJA
 	Z łatwych rzeczy, fajnie sie implementowało samą podstawę modelu klasy \emph{Agent} i \emph{Model}.
 	Bardzo przyjemnie i szybko można było zacząć bawić się dynamiką modelu, nawet bez plotów.
     
-    \begin{itemize}
-
-    \item SZYMON CZY ABY NA PEWNO Wyniki symulacji są, w naszej ocenie, naprawdę intuicyjne.
-	 Mimo dużej losowości modelu, łatwo przewidzieć jak zmiana parametrów wpływa na szybkość 
-	 zbiegania czy liczbę skrystalizowanych regionów kulturowych. Łatwo było również przewidzieć
-	  jak rozszerzenie modelu o więcej sąsiadów daje większe możliwości wymiany kulturowej, a 
-	  więc szybsze ujednolicenie.
-
-
-    \end{itemize}
+   
 
 
 	\section{Zastosowanie w życiu}
