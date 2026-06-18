@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.6.16)  18 JUN 2026 23:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.6.16)  18 JUN 2026 23:09
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -284,14 +284,15 @@ Package pdftex.def Info: assets/Plot_t_1.png  used on input line 153.
 <assets/compare_neighbourhoods_2.png, id=33, 867.24pt x 361.35pt>
 File: assets/compare_neighbourhoods_2.png Graphic file (type png)
 <use assets/compare_neighbourhoods_2.png>
-Package pdftex.def Info: assets/compare_neighbourhoods_2.png  used on input line 173.
+Package pdftex.def Info: assets/compare_neighbourhoods_2.png  used on input line 177.
 (pdftex.def)             Requested size: 364.19667pt x 151.74942pt.
-<assets/compare_neighbourhoods_3.png, id=34, 867.24pt x 361.35pt>
+ [5 <./assets/Plot_t_1.png>]
+<assets/compare_neighbourhoods_3.png, id=39, 867.24pt x 361.35pt>
 File: assets/compare_neighbourhoods_3.png Graphic file (type png)
 <use assets/compare_neighbourhoods_3.png>
-Package pdftex.def Info: assets/compare_neighbourhoods_3.png  used on input line 181.
+Package pdftex.def Info: assets/compare_neighbourhoods_3.png  used on input line 185.
 (pdftex.def)             Requested size: 364.19667pt x 151.74942pt.
- [5 <./assets/Plot_t_1.png> <./assets/compare_neighbourhoods_2.png>] [6 <./assets/compare_neighbourhoods_3.png>] [7] (raport_fuz.aux)
+ [6 <./assets/compare_neighbourhoods_2.png> <./assets/compare_neighbourhoods_3.png>] [7] (raport_fuz.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2025-12-24>
@@ -306,7 +307,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  57i,6n,65p,695b,355s stack positions out of 10000i,1000n,20000p,200000b,200000s
  <C:\Users\zofia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm0800.pk> <C:\Users\zofia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\tcrm1095.pk> <C:\Users\zofia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti1095.pk> <C:\Users\zofia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1200.pk> <C:\Users\zofia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1095.pk> <C:\Users\zofia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx1440.pk> <C:\Users\zofia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\zofia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1728.pk> <C:\Users\zofia\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecbx2488.pk><C:/Users/zofia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/zofia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/zofia/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on raport_fuz.pdf (7 pages, 439491 bytes).
+Output written on raport_fuz.pdf (7 pages, 439367 bytes).
 PDF statistics:
  335 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
