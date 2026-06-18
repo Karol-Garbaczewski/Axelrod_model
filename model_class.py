@@ -425,7 +425,7 @@ def plot_regions_vs_L(L_values, F, q, trials=20, n=100000):
     plt.show()
 
 
-def plot_q(q0, qN, a, b, n=1000, repeats=20):
+def plot_q(q0, qN, a, b, n=1000, trials=20):
     """Create a plot of the average number of final different cultures in a function of the number of traits per feature.
     Args:
         q0 (int): starting trait number
@@ -433,7 +433,7 @@ def plot_q(q0, qN, a, b, n=1000, repeats=20):
         a (int): number of features
         b (int): length of grid(denoted L in the paper)
         n (int, optional): number of iterations in the simulation. Defaults to 1000.
-        repeats (int, optional): number of independent simulations for a single value of q
+        trials (int, optional): number of independent simulations for a single value of q
     """
     qs = range(q0, qN)
     final_cultures = []
@@ -441,7 +441,7 @@ def plot_q(q0, qN, a, b, n=1000, repeats=20):
     for q in qs:
         cultures = []
         
-        for _ in range(repeats):
+        for _ in range(trials):
             model = Model(nx.Graph(), feature_len=a, grid_len=b, traits_per_feature=q)
             model.create_grid()
             model.run_simulation(n, include_acc=False)
