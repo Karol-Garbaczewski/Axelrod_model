@@ -396,7 +396,7 @@ class Model:
         return largest
 
 
-def plot_regions_vs_L(L_values, F, q, trials=20, n=100000):
+def plot_regions_vs_L(L_values, F, q, trials=20, n=100000, neighbour="standard"):
     """Create a plot of mean number of different regions in the function of the length of grid, with F,q=const. Specjalnie na życzenie Karola.
     Args:
         L_values (list): list of lengths of grid
@@ -404,12 +404,13 @@ def plot_regions_vs_L(L_values, F, q, trials=20, n=100000):
         q (int): number of traits per feature
         trials (int, optional): number of iterations before calculating the mean number. Defaults to 20.
         n (int, optional): number of iterations in the simulation. Defaults to 100000.
+        neighbour (str, optional): name of the neighbourhood type
     """
     mean_regions = []
     for L in L_values:
         regions = []
         for _ in range(trials):
-            model = Model(nx.Graph(), feature_len=F, grid_len=L, traits_per_feature=q)
+            model = Model(nx.Graph(), feature_len=F, grid_len=L, traits_per_feature=q, neighbourhood=neighbour)
             model.create_grid()
             final_model = model.run_simulation(n, 100, include_acc=False)
             regions.append(final_model.count_regions())
@@ -487,5 +488,51 @@ def plot_q_paperlike(q0, qN, a, b, trials=20, n=100000, logscale=False):
     plt.ylabel(r"$\langle S_{max}/L^2 \rangle$")
     plt.title(f"Model Axelroda (F={a}, L={b})")
     plt.grid(True)
+    plt.tight_layout()
+    plt.show()
+
+def plot_t_compare_neighbourhoods(n, acc=100, feature_len=5, grid_len=20, traits_per_feature=3):
+    neighbourhoods = ["standard", "extended", "toroidal"]
+    results = {}
+
+    for neigh in neighbourhoods:
+        model = Model(nx.Graph(), feature_len=feature_len, grid_len=grid_len, traits_per_feature=traits_per_feature, neighbourhood=neigh)
+        model.create_grid()
+
+        _, i, steps, cultures, avg_similarities = model.run_simulation(n, acc)
+
+        results[neigh] = {
+            "steps": steps,
+            "cultures": cultures,
+            "avg_similarities": avg_similarities}
+        
+    plt.figure(figsize=(12, 5))
+
+    plt.subplot(1, 2, 1)
+    for neigh in neighbourhoods:
+        plt.plot(
+            results[neigh]["steps"],
+            results[neigh]["cultures"],
+            label=neigh
+        )
+    plt.xlabel("kroki czasowe")
+    plt.ylabel("liczba kultur")
+    plt.title("Liczba kultur w czasie")
+    plt.legend()
+    plt.grid(True)
+
+    plt.subplot(1, 2, 2)
+    for neigh in neighbourhoods:
+        plt.plot(
+            results[neigh]["steps"],
+            results[neigh]["avg_similarities"],
+            label=neigh
+        )
+    plt.xlabel("kroki czasowe")
+    plt.ylabel("średnie podobieństwo")
+    plt.title("Średnie podobieństwo w czasie")
+    plt.legend()
+    plt.grid(True)
+
     plt.tight_layout()
     plt.show()

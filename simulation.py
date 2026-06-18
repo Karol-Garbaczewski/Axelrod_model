@@ -1,4 +1,4 @@
-from model_class import Agent, Model, plot_q, plot_q_paperlike, plot_regions_vs_L
+from model_class import Agent, Model, plot_q, plot_q_paperlike, plot_regions_vs_L, plot_t_compare_neighbourhoods
 import networkx as nx
 
 if __name__ == "__main__":
@@ -31,5 +31,6 @@ if __name__ == "__main__":
         neighbourhood="standard")
 
     #plot_q(2, 20, 5, 10, n=30_000, trials=4)
-    plot_q_paperlike(1, 20, 5, 10, trials=15, n=60_000)
+    #plot_q_paperlike(1, 20, 5, 10, trials=15, n=60_000)
     #plot_regions_vs_L(range(5, 55),5,5, trials=5, n=50_000)
+    plot_t_compare_neighbourhoods(200_000, 370, 6, 30, 12)
