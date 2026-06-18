@@ -79,7 +79,45 @@
 
 
     \subsection{Model standardowy}
+		\begin{figure}[h!]
+			\centering
+			\includegraphics[width=0.8\textwidth]{assets/Grid1.png}
+			\caption{Stan stabilny, układ zbiegł do punktów wspólnych kulturowo.}
+		\end{figure}
 
+
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{assets/plot_q_1.png}
+			\caption{wiecej wariantow cech wiecej kultur}
+			
+		\end{figure}
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{assets/plot_q_paperlike_1.png}
+			\caption{spadkowa im wiecej trade tym mniejszy najwiekszy region}
+			
+		\end{figure}
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{assets/plot_regions_vs_L_1.png}
+			\caption{dluzszy wiecej siatka wiecej regionow}
+			
+		\end{figure}
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{assets/Plot_t_1.png.png}
+			\caption{wiecej czasu to mniej kultur asymilacja}
+			
+		\end{figure}
     \subsection{Rozszerzenie modelu}
 
     Pomysłem na rozwinięcie funkcjonalności modelu jest zmiana sposobu, w jaki członkowie kultur (agenci) są ze sobą połączeni. W standardowym modelu przedstawionym przez Axelroda łączymy agentów na krzyż, tj. agent jest połączony z agentem z lewej, prawej, u góry i na dole. Agenci znajdujący się na brzegu siatki mają natomiast o jednego mniej sąsiada, a Ci w rogach mają w szczególności tylko dwóch.
@@ -90,6 +128,24 @@
     Innym pomysłem jest zadbanie o to, aby agenci na brzegach macierzy nie byli poszkodowani mniejszą liczbą sąsiadów. Dochodzimy do tego poprzez połączenie agenta z jednego brzegu z agentem z brzegu przeciwnego. W praktyce, agent na lewym brzegu jest połączony z agentem tego samego wiersza na prawym brzegu, a np. agent w lewym górnym rogu jest połączony z agentem w prawym dolnym rogu. Sąsiedztwo takie nazwiemy \emph{toroidal}, jako przypominające wzięcie brzegów macierzy i połączenie ich jak torrusa.
 
     Sprawdziliśmy i porównaliśmy symulacyjnie, jak ma się sprawa zbieżności i liczby regionów dla różnych sąsiedztw.
+ 1. extended > torroidal > stadard
+2. inaczej 
+JAKI POWOD SPEKULACJA
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{assets/compare_neighbourhoods_2.png}
+			\caption{PIERWSZA SYM}
+			
+		\end{figure}
+
+
+		\begin{figure}[H]
+			\centering
+			\includegraphics[width=0.8\textwidth]{assets/compare_neighbourhoods_3.png}
+			\caption{DRUGA SYM}
+			
+		\end{figure}
 
 
 
@@ -122,6 +178,13 @@
 	%wykresy 
 	%modfikacja modelu
 	\subsection{Analiza trudności}
+wklejone / zmienie skladnie by bylo sliczne -. zosia
+	trudne na pewno było żeby to w całości tak miało ręce i nogi, żeby różne metody nie kłóciły się ze sobą i nie psuły nawzajem wyników a przeprowadzanie symulacji nie zmieniało nieodwracalnie badanego układu, tylko żeby można było do niego wrócić
+wykres z kolorami też był problematyczny, ale udało się zrobić, żeby na obu wykresach te same kolory reprezentowały te same kultury
+Karol
+Ja myśle że trudne i nowe dla mnie było zaprojektowanie klasy i rozwijanie klasy w kilka osob, bo jednak trzeba bylo rozumieć pomysły które druga osoba zaimplementowała. Więc myśle ze taka kwestia koło organizacyjna. 
+
+Z łatwych rzeczy fajnie sie implementowało samą podstawę modelu klasy agent i model. Bardzo przyjemne szybko można było zacząć bawić się dynamiką modelu nawet bez plotów.
     
     \begin{itemize}
 
@@ -158,8 +221,6 @@ dzial???????????????\\
 	• Wnioski i przemyślenia:\\
 
 
-	Dziala///////////////////////////////
-	a) analiza trudności (co było najtrudniejsze, a co zaskakująco łatwe bądź intuicyjne),\\
 	b) ciekawostki (przede wszystkim zaskakujące zachowania modelu, ale również inne
 	nieoczekiwane aspekty realizacji Projektu),\\
 	c) subiektywna ocena tematu (co i dlaczego było interesujące bądź okazało się
