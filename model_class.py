@@ -425,28 +425,34 @@ def plot_regions_vs_L(L_values, F, q, trials=20, n=100000):
     plt.show()
 
 
-def plot_q(q0, qN, a, b, n=1000):
-    """Create a plot of number of different cultures in a function of the number of traits per feature.
+def plot_q(q0, qN, a, b, n=1000, repeats=20):
+    """Create a plot of the average number of final different cultures in a function of the number of traits per feature.
     Args:
         q0 (int): starting trait number
         qN (int): ending trait number
         a (int): number of features
         b (int): length of grid(denoted L in the paper)
         n (int, optional): number of iterations in the simulation. Defaults to 1000.
+        repeats (int, optional): number of independent simulations for a single value of q
     """
     qs = range(q0, qN)
     final_cultures = []
+
     for q in qs:
-        model = Model(nx.Graph(), feature_len=a, grid_len=b, traits_per_feature=q)
-        model.create_grid()
-        model.run_simulation(n, include_acc=False)
-        final_cultures.append(
-            len(model.distinct_agents_traits())
-        )
+        cultures = []
+        
+        for _ in range(repeats):
+            model = Model(nx.Graph(), feature_len=a, grid_len=b, traits_per_feature=q)
+            model.create_grid()
+            model.run_simulation(n, include_acc=False)
+            cultures.append(len(model.distinct_agents_traits()))
+
+        final_cultures.append(np.mean(cultures))
+
     plt.plot(qs, final_cultures, 'o-')
     plt.xlabel("q (traits per feature)")
     plt.ylabel("Liczba kultur (po zbieżności)")
-    plt.title("Przejście fazowe (?) w modelu Axelroda")
+    plt.title("Średnia końcowa liczba kultur w zależności od liczby wariantów cech")
     plt.tight_layout()
     plt.grid()
     plt.show()

@@ -72,23 +72,20 @@
 	czyli kolejne interakcje nic nie zmieniają albo w przeciwnym wypadku interakcje
 	 nie są już możliwe. Obserwujemy wtedy powstanie regionów wspólne kulturowo.
 
-Konspekt
+    \section{Wyniki symulacji}
 
-\begin{enumerate}
+    \subsection{Model standardowy}
 
-\item Krótki teoretyczny opis modelu, ale taki serio krótki tylko intuicja tej macierzy i wartości i traitów i o czym on mówi (no o kulturach)
+    \subsection{Rozszerzenie modelu}
 
-\item Opis naszego zaimplementowania, też bez jakiegoś super głębokiego wchodzenia w szczegóły (no że klasa Agent, Model, co robią i jak symulujemy)
+    Pomysłem na rozwinięcie funkcjonalności modelu jest zmiana sposobu, w jaki członkowie kultur (agenci) są ze sobą połączeni. W standardowym modelu przedstawionym przez Axelroda łączymy agentów na krzyż, tj. agent jest połączony z agentem z lewej, prawej, u góry i na dole. Agenci znajdujący się na brzegu siatki mają natomiast o jednego mniej sąsiada, a Ci w rogach mają w szczególności tylko dwóch.
 
-\item Wykresy, porównanie wyniku z publikacji z modyfikacją naszą
+    W celu zwiększenia przepływu kulturowego ustalamy sąsiedztwo o promieniu 1. To oznacza, że włączamy do sąsiedztwa każdy kierunek, również ukośny. Dla agentów wewnątrz siatki oznacza to 8 agentów sąsiadujących. Sąsiedztwo tworzy wtedy kwadrat \( 3 \times 3\). Nazwiemy ten rodzaj sąsiedztwa \emph{extended}.
 
-\item Patrz sekcja Wnioski i przemyślenia 
+    Innym pomysłem jest zadbanie o to, aby agenci na brzegach macierzy nie byli poszkodowani mniejszą liczbą sąsiadów. Dochodzimy do tego poprzez połączenie agenta z jednego brzegu z agentem z brzegu przeciwnego. W praktyce, agent na lewym brzegu jest połączony z agentem tego samego wiersza na prawym brzegu, a np. agent w lewym górnym rogu jest połączony z agentem w prawym dolnym rogu. Sąsiedztwo takie nazwiemy \emph{toroidal}, jako przypominające wzięcie brzegów macierzy i połączenie ich jak torrusa.
 
-\end{enumerate}
+    Sprawdziliśmy i porównaliśmy symulacyjnie, jak ma się sprawa zbieżności i liczby regionów dla różnych sąsiedztw.
 
-\vspace{3cm}
-
-	
 
 
 	\section{Wnioski}
@@ -118,6 +115,14 @@ Konspekt
 	%wykresy 
 	%modfikacja modelu
 	\subsection{Analiza trudności}
+    
+    \begin{itemize}
+
+    \item Wyniki symulacji są, w naszej ocenie, naprawdę intuicyjne. Mimo dużej losowości modelu, łatwo przewidzieć jak zmiana parametrów wpływa na szybkość zbiegania czy liczbę skrystalizowanych regionów kulturowych. Łatwo było również przewidzieć jak rozszerzenie modelu o więcej sąsiadów daje większe możliwości wymiany kulturowej, a więc szybsze ujednolicenie.
+
+    \item Największą trudnością w implementacji w Pythonie okazała się optymalizacja.
+
+    \end{itemize}
 	%i te do a-d 
 	\section{Podział pracy w grupie}
 
