@@ -251,8 +251,10 @@ class Model:
         plt.grid(True)
 
         plt.tight_layout()
+        print(model_after.has_converged())
         plt.show()
         return model_after
+    
     def culture_matrix_deprecated(self):
         """Create a matrix of cultures from self. Deprecated, see: culture_matrix().
         Returns:
