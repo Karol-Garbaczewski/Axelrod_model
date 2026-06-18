@@ -72,6 +72,17 @@
 	czyli kolejne interakcje nic nie zmieniają albo w przeciwnym wypadku interakcje
 	 nie są już możliwe. Obserwujemy wtedy powstanie regionów wspólne kulturowo.
 
+	\subsection{Schemat konstrukcji}
+	\begin{enumerate}
+		\item Losowanie: Program wybiera losowo aktywnego agenta oraz jednego z jego sąsiadów.
+		\item Prawdopodobieństwo interakcji: agenci wejdą w interkację w zależności 
+		od aktualnego podobieństwa kulturowego (np. dla 3 cech wspolnych na 5 prawdopodobieństwo wynosi 60\%, a gdy brak wspólnych to nie dochodzi do interakcji).
+		\item Modyfikacja cechy: agent losowo przyjmuję jedną cechę sąsiada, czyli zwiększa podobieństwo kulturowe.
+	\end{enumerate}
+
+
+
+
 	\section{Statystyczne zmiany parametrów}
 
 
@@ -114,7 +125,7 @@
 
 		\begin{figure}[H]
 			\centering
-			\includegraphics[width=0.8\textwidth]{assets/Plot_t_1.png.png}
+			\includegraphics[width=0.8\textwidth]{assets/Plot_t_1.png}
 			\caption{wiecej czasu to mniej kultur asymilacja}
 			
 		\end{figure}
@@ -215,7 +226,7 @@ Z łatwych rzeczy fajnie sie implementowało samą podstawę modelu klasy agent 
 
 dzial???????????????\\
 	Dokument powinien zawierać:\\
-	• Zwięzły opis wykonanych prac i zaimplementowanego modelu.\\
+	• Zwięzły opis  zaimplementowanego modelu.\\
 	• Wyniki w formie wykresów (optymalnie dwa): zestawienie wyniku odtworzonego z
 	publikacji z nowym wynikiem uzyskanym po modyfikacji modelu.\\
 	• Wnioski i przemyślenia:\\
