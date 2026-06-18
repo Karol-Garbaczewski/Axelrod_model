@@ -107,8 +107,10 @@
 		\begin{figure}[h!]
 			\centering
 			\includegraphics[width=0.8\textwidth]{assets/Grid1.png}
-			\caption{Stan stabilny, układ zbiegł do punktów wspólnych kulturowo.}
+			\caption{Stan stabilny, układ zbiegł do regionów wspólnych kulturowo.}
 		\end{figure}
+
+        W celu zobrazowania, wizualnego zrozumienia, na rys. 1 przedstawiony jest efekt pełnej pojedynczej symulacji przebiegu modelu. Większość siatki została zaabsorbowana przez jedną kulturę i wytworzyły się cztery wyspy kultur. Tutaj ustaliliśmy trzy cechy po sześć wariantów na siatce \(15 \times 15\). W przeważającej części symulacji wyspy pojawiały się wyłącznie na brzegach, co może być spowodowane mniejszą liczbą sąsiadów, a więc mniejszą szaną na wymianę cech.
 
 
 
@@ -116,17 +118,24 @@
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{assets/plot_q_1.png}
-			\caption{wiecej wariantow cech wiecej kultur}
+			\caption{Pozytywna korelacja liczby wariantów i liczby różnych kultur}
 			
 		\end{figure}
+
+        Dla parametrów liczby cech \(5\) i długości siatki \(10\) modelu zbadaliśmy wpływ liczby wariantów na ostateczny rozkład kultur. Aby wyniki były statystycznie wiarygodne, dla każdej kolejnej liczby wariantów przeprowadzaliśmy symulację \(15\) razy i uśrednialiśmy wyniki. Stały wzrost liczby kultur widoczny na rys. 2 jest dość intuicyjny. Prawdopodobnie działa to tak, że im więcej możliwych wariantów cechy, tym mniejsza szansa, że będą one takie same dla sąsiadujących agentów. Stąd skromniejszy przepływ kultur, więc mniejsze ujednolicenie.
+
+        Aby zbadać jak znaczący jest największy region po stabilizacji stworzyliśmy funkcję przedstawioną na rys. 3. Spadkowa tendencja rozmiaru regionu wraz ze wzrostem liczby cech może być tłumaczona tym, że im więcej mamy cech, tym mniej z nich ma szansę się idealnie pokryć dla sąsiednich agentów. To bezpośrednio oznacza mniejsze podobieństwo, które pociąga mniejszą wymianę informacji kulturowej. Ostatecznie, model nie tak chętnie ujednolica się. Mamy więcej różnych kultur o mniejszych polach.
+        
 
 
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{assets/plot_q_paperlike_1.png}
-			\caption{spadkowa im wiecej trade tym mniejszy najwiekszy region}
+			\caption{Odwrotna zależność wielkości najmniejszego regionu względem liczby cech}
 			
 		\end{figure}
+
+        
 
 
 		\begin{figure}[H]
@@ -136,11 +145,13 @@
 			
 		\end{figure}
 
+        Proces asymilacji dobrze widać na rys. 5. Intuicyjnie, podobieństwo agentów rośnie wraz z czasem. Tym samym liczba odróżnialnych kultur maleje tu jeszcze work in progress
+
 
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{assets/Plot_t_1.png}
-			\caption{wiecej czasu to mniej kultur asymilacja}
+			\caption{Asymilacja kultur zobrazowana w czasie}
 			
 		\end{figure}
     \subsection{Rozszerzenie modelu}
