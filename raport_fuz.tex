@@ -110,7 +110,7 @@
 			\caption{Stan stabilny, układ zbiegł do regionów wspólnych kulturowo.}
 		\end{figure}
 
-        W celu zobrazowania, wizualnego zrozumienia, na rys. 1 przedstawiony jest efekt pełnej pojedynczej symulacji przebiegu modelu. Większość siatki została zaabsorbowana przez jedną kulturę i wytworzyły się cztery wyspy kultur. Tutaj ustaliliśmy trzy cechy po sześć wariantów na siatce \(15 \times 15\). W przeważającej części symulacji wyspy pojawiały się wyłącznie na brzegach, co może być spowodowane mniejszą liczbą sąsiadów, a więc mniejszą szansą na wymianę cech.
+        W celu zobrazowania, wizualnego zrozumienia, na rys. 1 przedstawiony jest efekt pełnej pojedynczej symulacji przebiegu modelu. Większość siatki została zaabsorbowana przez jedną kulturę i wytworzyły się cztery wyspy kultur. Tutaj ustaliliśmy trzy cechy po sześć wariantów na siatce \(15 \times 15\). Warto zaznaczyć, że w przeważającej części symulacji wyspy pojawiały się wyłącznie na brzegach, co może być spowodowane mniejszą liczbą sąsiadów, a więc mniejszą szansą na wymianę cech.
 
 
 
@@ -141,11 +141,13 @@
 		\begin{figure}[H]
 			\centering
 			\includegraphics[width=0.8\textwidth]{assets/plot_regions_vs_L_1.png}
-			\caption{dluzszy wiecej siatka wiecej regionow}
+			\caption{Dodatnia korelacja wielkości siatki i średniej liczby regionów}
 			
 		\end{figure}
 
-        Proces asymilacji dobrze widać na rys. 5. Intuicyjnie, podobieństwo agentów rośnie wraz z czasem. Tym samym liczba odróżnialnych kultur maleje tu jeszcze work in progress
+        Na rys. 4 badamy rozmiar największego regionu unormowany rozmiarem siatki, czyli w efekcie możemy myśleć jaką część siatki zajmuje największy region. Obserwujemy, że wraz z zwiększaniem liczby cech największy region maleje. Może to być spowodowane tym samym co wzrost liczby kultur obserwowany na rys. 3, czyli mniejszym podobieństwem i przepływem kultury.
+        
+        Proces asymilacji dobrze widać na rys. 5. Wraz z czasem średnie podobieństwo rośnie poprzez wymiany kulturowe agentów. Ten proces prawdopodobnie pociąga za sobą upodobnianie się agentów kulturowo, więc liczba różnych kultur majele. Spowalniające tempo przyrostu podobieństwa możemy próbować tłumaczyć tym, że na początku przy dużej różnorodności agenci wchodzą w rozmaite interakcje, natomiast pod koniec procesu zbiegania zmiany potrafią oscylować wokół jednego stanu zanim faktycznie zbiegną. Jest to jednak przypuszczenie, co do którego nie mamy wysokiej pewności i warto zgłębić tempo przyrostu bardziej skrupulatnie.
 
 
 		\begin{figure}[H]
@@ -170,6 +172,9 @@
 	  jak rozszerzenie modelu o więcej sąsiadów daje większe możliwości wymiany kulturowej, a 
 	  więc szybsze ujednolicenie.
 
+
+    Jakie efekty mają różne typy sąsiedztw na charakter modelu? Na rys. 6 i 7 przedstawione są dwie symulacje uśrednionych procesów dla trzech wariantów sąsiedztwa. Na ich podstawie otrzymujemy, że sąsiedztwo standardowe wykazuje największe podobieństwo, co jest skorelowane z mniejszą liczbą kultur. To oznacza, że proces asymilacji zachodzi o dziwo szybciej, niż dla toroidal i extended, które wydają się być bardziej połączone. Jednym możliwym przypuszczeniem jest to, że więcej sąsiadów niekoniecznie oznacza większy przepływ kultury. Możliwe, że mniejsze sąsiedztwo, czyli u nas standardowe, sprzyja powstawaniu skupionych w na konkretnym obszarze regionów kultury. Wszak dla sąsiedztwa extended mamy więcej możliwych interakcji, czyli, co ważne, większą konkurencję o dominację kulturową. To może spowalniać proces asymilacji. W kwestii sąsiedztwa toroidalnego, sprawia ono, że więcej kultur pozostaje w kontakcie. W standardowym modelu na brzegach istnieje większy potencjał na ujednolicenie kultury. W toroidalnym natomiast usuwamy ten efekt całkowicie.
+    
 
 
 		\begin{figure}[H]
