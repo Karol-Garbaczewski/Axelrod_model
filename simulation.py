@@ -32,5 +32,5 @@ if __name__ == "__main__":
 
     #plot_q(2, 20, 5, 10, n=30_000, trials=4)
     #plot_q_paperlike(1, 20, 5, 10, trials=15, n=60_000)
-    #plot_regions_vs_L(range(5, 55),5,5, trials=5, n=50_000)
-    plot_t_compare_neighbourhoods(200_000, 370, 6, 30, 12)
+    plot_regions_vs_L([10,30,50,100],5,15, trials=1, n=500_000_000)
+    #plot_t_compare_neighbourhoods(200_000, 370, 6, 30, 12)

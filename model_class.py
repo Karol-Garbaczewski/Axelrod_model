@@ -414,6 +414,7 @@ def plot_regions_vs_L(L_values, F, q, trials=20, n=100000, neighbour="standard")
             model.create_grid()
             final_model = model.run_simulation(n, 100, include_acc=False)
             regions.append(final_model.count_regions())
+            print(final_model.has_converged())
         mean_regions.append(np.mean(regions))
 
     plt.figure(figsize=(8, 5))
